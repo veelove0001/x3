@@ -275,10 +275,10 @@ private struct KeyboardShortcutsSheet: View {
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 6) {
                     ForEach(["Menus", "Canvas & Layers", "Text Editing"], id: \.self) { group in
-                        Text(group).font(.headline).padding(.top, 8)
+                        Text(group.localized).font(.headline).padding(.top, 8)
                         ForEach(ShortcutDefinition.all.filter { $0.group == group && (search.isEmpty || $0.title.localizedCaseInsensitiveContains(search)) }) { definition in
                             HStack {
-                                Text(definition.title)
+                                Text(definition.title.localized)
                                 Spacer()
                                 ShortcutRecorder(chord: draft[definition.id] ?? definition.original,
                                     recording: recording == definition.id,
@@ -296,7 +296,7 @@ private struct KeyboardShortcutsSheet: View {
                                                 recording = nil
                                             } label: { Image(systemName: "xmark.circle.fill") }
                                                 .buttonStyle(.borderless).foregroundStyle(.secondary)
-                                                .help("Remove this shortcut").padding(.trailing, 7)
+                                                .help("Remove this shortcut".localized).padding(.trailing, 7)
                                         }
                                     }
                             }
@@ -316,10 +316,10 @@ private struct KeyboardShortcutsSheet: View {
             }
             Divider()
             HStack {
-                Button("Restore Defaults") { recording = nil; draft = [:] }
+                Button("Restore Defaults".localized) { recording = nil; draft = [:] }
                 Spacer()
-                Button("Cancel") { settings.close() }.keyboardShortcut(.cancelAction)
-                Button("Save") { settings.save(draft) }.keyboardShortcut(.defaultAction)
+                Button("Cancel".localized) { settings.close() }.keyboardShortcut(.cancelAction)
+                Button("Save".localized) { settings.save(draft) }.keyboardShortcut(.defaultAction)
                     .buttonStyle(.borderedProminent)
                     .disabled(recording != nil || ShortcutSettings.problem(in: draft) != nil)
             }
